@@ -1,0 +1,2 @@
+sudo apt-get install python3-rpi.gpio
+sudo apt-get install python3-alsaaudio
