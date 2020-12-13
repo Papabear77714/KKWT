@@ -27,7 +27,8 @@ Once you have the OS loaded onto the Pi, enable SSH. SSH will facilite remote co
         source .venv/bin/activate
         export SLACK_BOT_TOKEN=xoxb-your-token
         pip install slack_sdk
-        export SLACK_SIGNING_SECRET=your-signing-secret
+        pip install RPi.GPIO
+
 
 ````
 
