@@ -3,6 +3,7 @@
 #code used was copied from https://movementarian.org/blog/
 #changes are being made to what we know works
 
+import datetime
 import RPi.GPIO as GPIO
 import threading
 import signal
@@ -10,9 +11,6 @@ import wave
 import time
 import sys
 import os
-
-samplefile = "ding-dong.wav" 
-device='plughw:1,0'
 
 # in seconds
 settle_time = 0.1
@@ -24,7 +22,8 @@ def notify():
     Nothing = 0
 
 def play():
-    os.system("aplay ding-dong.wav")
+    print('DING DONG')
+    os.system('aplay ding-dong.wav >/dev/null 2>&1')
    
 def wait():
     global active
@@ -32,13 +31,16 @@ def wait():
     while True:
         input_state = GPIO.input(18)
         if input_state:
-            print('got input_state %s, active -> False' % input_state)
+            print('Bell has rung.')
             active = False
             break
         time.sleep(0.2)
 
 def trigger():
-    print('triggering at %s' % time.time())
+    now = datetime.datetime.now()
+    print("Doorbell pushed at: ")
+    print(now.strftime('%Y-%m-%d %H:%M:%S'))
+   
 
     tn = threading.Thread(target=notify)
     tn.start()
@@ -49,8 +51,6 @@ def trigger():
     tw = threading.Thread(target=wait)
     tw.start()
 
-    tm = threading.Thread(target=message)
-
     tw.join()
     tp.join()
     tn.join()
@@ -59,12 +59,12 @@ def settle():
     global settle_time
     time.sleep(settle_time)
     input_state = GPIO.input(18)
-    print('input state now %s' % input_state)
+    print('Doorbell ready. Waiting to be activated.') 
     return not input_state
 
 def falling_edge(channel):
     input_state = GPIO.input(18)
-    print('got falling edge, input_state %s' % input_state)
+    print('Doorbell entering ready state')
     if settle():
         trigger()
 
