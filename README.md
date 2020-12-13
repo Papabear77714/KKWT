@@ -24,10 +24,10 @@ Once you have the OS loaded onto the Pi, enable SSH. SSH will facilite remote co
         sudo apt-get install python3-venv
         sudo apt-get install dos2unix
         python3 -m venv .venv
-        source .venv/bin/activate
-        export SLACK_BOT_TOKEN=xoxb-your-token
         pip install slack_sdk
         pip install RPi.GPIO
+        source .venv/bin/activate
+        export SLACK_BOT_TOKEN=xoxb-your-token
         export KKWT_NAME=Your_name
 ````
 
@@ -46,4 +46,21 @@ From a shell prompt change directories into the folder where you installed the t
 ````
         python3 kkwt.py
 ````
-Leave the script running. Whenever the doorbell is pressed, you will get an audible tone locally, as well as a posting to the Slack channel with a message that your doorbell has rang.
+Leave the script running. Whenever the doorbell is pressed, you will get an audible tone locally, as well as a posting to the Slack channel with a message that your doorbell has rang. To stop the program from running, simply press Ctrl+C.
+
+## Recomendations
+Once you have the script running, you can exit the shell, however, if you want to be able to connect back to the same session and end the running script, you can install screen on your Pi. To do so, issue the following command:
+````
+        sudo apt-get install screen
+````
+Once the program is installed, start the program by typing screen. Press the enter key. Enter the following commands:
+````
+        source .venv/bin/activate
+        export SLACK_BOT_TOKEN=xoxb-your-token
+        export KKWT_NAME=Your_name
+````
+You are now ready to start the program like before. Type:
+````
+        python3 kkwt.py
+````
+Next, press Ctrl+A and then D. That will detach you from the *screen*. You can now exit Putty or close the session. The program will continue to run in the background. Once you are ready to reconnect, log back onto the Pi, and issue the **screen -ls** command. This will list the running screens. Look for the screen number, and type **screen -r 1234** with 1234 being the screen number you found. This will reattach you to the screen. You can exit the program by pressing Ctrl+C. And, you can terminate the screen by issuing the **exit** command.
