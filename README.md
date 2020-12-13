@@ -21,9 +21,14 @@ Once you have the OS loaded onto the Pi, enable SSH. SSH will facilite remote co
         sudo apt-get update
         sudo apt-get install python3-rpi.gpio
         sudo apt-get install python3-alsaaudio
+        sudo apt-get install python3-venv
         sudo apt-get install dos2unix
         python3 -m venv .venv
         source .venv/bin/activate
+        export SLACK_BOT_TOKEN=xoxb-your-token
+        pip install slack_sdk
+        export SLACK_SIGNING_SECRET=your-signing-secret
+
 ````
 
 ## Installation
