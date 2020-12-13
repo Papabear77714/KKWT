@@ -32,4 +32,18 @@ Once you have the OS loaded onto the Pi, enable SSH. SSH will facilite remote co
 ````
 
 ## Installation
-Copy the files using WinSCP or Cyberduck (Or any software you prefere) to the Pi. You can create a KKWT folder, or leave it on the Pi.
+Copy the files using WinSCP or Cyberduck (Or any software you prefere) to the Pi. You can create a KKWT folder, or leave it on the Pi home folder. There are two files that you need to copy:
+* kkwt.py
+* ding-dong.wav
+Once you have the two files loaded, connect to your Pi's shell. You can use your Mac's SSH command, or use Putty if you are using Windows. If you are using Windows, you may have to run dos2unix. Here is the code to do so:
+````
+        dos2unix kkwt.py
+````
+Make sure that both files are in the same directory. This completes the installation steps.
+
+## Running
+From a shell prompt change directories into the folder where you installed the two files. Run the following command:
+````
+        python3 kkwt.py
+````
+Leave the script running. Whenever the doorbell is pressed, you will get an audible tone locally, as well as a posting to the Slack channel with a message that your doorbell has rang.
