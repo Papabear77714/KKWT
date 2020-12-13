@@ -31,7 +31,7 @@ def wait():
     while True:
         input_state = GPIO.input(18)
         if input_state:
-            print('Bell has rung.')#('got input_state %s, active -> False' % input_state)
+            print('Bell has rung.')
             active = False
             break
         time.sleep(0.2)
@@ -40,7 +40,7 @@ def trigger():
     now = datetime.datetime.now()
     print("Doorbell pushed at: ")
     print(now.strftime('%Y-%m-%d %H:%M:%S'))
-    #print('Doorbell pushed at %s' %t)#('triggering at %s' % time.time())
+   
 
     tn = threading.Thread(target=notify)
     tn.start()
@@ -59,12 +59,12 @@ def settle():
     global settle_time
     time.sleep(settle_time)
     input_state = GPIO.input(18)
-    print('Doorbell ready. Waiting for doorbell to be activated.') #('input state now %s' % input_state)
+    print('Doorbell ready. Waiting to be activated.') 
     return not input_state
 
 def falling_edge(channel):
     input_state = GPIO.input(18)
-    print('Doorbell entering ready state')#('got falling edge, input_state %s' % input_state)
+    print('Doorbell entering ready state')
     if settle():
         trigger()
 
