@@ -12,6 +12,13 @@ import time
 import sys
 import os
 
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+
+client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
+doorbell = os.getenv('KKWT_NAME')
+channel_id = "C01GRC04C2E"
+
 # in seconds
 settle_time = 0.1
 bounce_time = 1
@@ -19,7 +26,11 @@ bounce_time = 1
 active = False
 
 def notify():
-    Nothing = 0
+    result = client.chat_postMessage(
+        channel=channel_id, 
+        text='Someone is at ' + doorbell + '\'s door'
+    )
+#    logger.info(result)
 
 def play():
     print('DING DONG')
