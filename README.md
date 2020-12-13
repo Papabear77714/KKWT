@@ -28,8 +28,7 @@ Once you have the OS loaded onto the Pi, enable SSH. SSH will facilite remote co
         export SLACK_BOT_TOKEN=xoxb-your-token
         pip install slack_sdk
         pip install RPi.GPIO
-
-
+        export KKWT_NAME=Your_name
 ````
 
 ## Installation
