@@ -15,12 +15,12 @@ import smtplib #for text messages
 
 from email.message import EmailMessage
 
-#from slack_sdk import WebClient
-#from slack_sdk.errors import SlackApiError
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
 
-#client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
-#doorbell = os.getenv('KKWT_NAME')
-#channel_id = "C01GRC04C2E"
+client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
+doorbell = os.getenv('KKWT_NAME')
+channel_id = "C01GRC04C2E"
 
 # in seconds
 settle_time = 0.1
@@ -28,19 +28,20 @@ bounce_time = 1
 
 active = False
 
-'''def notify():
+def notify():
     result = client.chat_postMessage(
         channel=channel_id, 
         text='Someone is at ' + doorbell + '\'s door'
     )
-#    logger.info(result)'''
-def door_alert(subject, body, to):
-    msg = EmailMessage()
-    msg.set_content(body)
-    msg['subject'] = Doorbell alert
+    #logger.info(result)
 
-    user = "jerry.naylor77@gmail.com"
-    password = "MarchApril20072014!"
+#def door_alert(subject, body, to):
+    #msg = EmailMessage()
+    #msg.set_content(body)
+    #msg['subject'] = Doorbell alert
+
+    #user = "jerry.naylor77@gmail.com"
+    #password = "MarchApril20072014!"'''
 
 def play():
     x = datetime.datetime.now()
@@ -50,7 +51,7 @@ def play():
     if ((y == 11 and 30 >= z >= 27)
         or (y == 12 and 25 >= z >= 1)):
             print('DING DONG')
-            os.system('aplay jinglebell.wav >/dev/null 2>&1')
+            os.system('aplay jnglbell.wav >/dev/null 2>&1')
 
     elif (y == 10 and 30 >= z >= 1):
         print('DING DONG')
