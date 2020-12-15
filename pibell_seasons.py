@@ -12,6 +12,7 @@ import time
 import sys
 import os
 import smtplib #for text messages
+import random
 
 from email.message import EmailMessage
 
@@ -35,26 +36,22 @@ def notify():
     )
     #logger.info(result)
 
-#def door_alert(subject, body, to):
-    #msg = EmailMessage()
-    #msg.set_content(body)
-    #msg['subject'] = Doorbell alert
 
-    #user = "jerry.naylor77@gmail.com"
-    #password = "MarchApril20072014!"'''
 
 def play():
     x = datetime.datetime.now()
-    y = (x.month)
-    z = (x.day)
+    month = (x.month)
+    day = (x.day)
 
-    if ((y == 11 and 30 >= z >= 27)
-        or (y == 12 and 25 >= z >= 1)):
+    if ((month == 11 and 30 >= day >= 27)
+        or (month == 12 and 25 >= day >= 1)):
             print('DING DONG')
+            wav = random.randint(0,22)
             os.system('aplay jnglbell.wav >/dev/null 2>&1')
 
-    elif (y == 10 and 30 >= z >= 1):
+    elif (month == 10 and 30 >= day >= 1):
         print('DING DONG')
+        wav = random.randint(0,22)
         os.system('aplay vampirehowl.wav >/dev/null 2>&1')  
 
     else:
