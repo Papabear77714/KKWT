@@ -21,7 +21,7 @@ from slack_sdk.errors import SlackApiError
 
 client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 doorbell = os.getenv('KKWT_NAME')
-channel_id = "C01GRC04C2E"
+channel_id = os.getenv('SLACK_CHANNEL_ID')
 
 # in seconds
 settle_time = 0.1
