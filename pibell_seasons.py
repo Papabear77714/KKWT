@@ -36,7 +36,15 @@ def notify():
     )
     #logger.info(result)
 
-
+def christmastone():
+    wav = {
+        0: "jnglbell.wav",
+        1: "hohoho.wav",
+        2: "carolbells.wav"
+    }
+    wavfile = wav.get(random.randint(0,2),'ding-dong.wav')
+    print(wavfile)
+    return wavfile
 
 def play():
     x = datetime.datetime.now()
@@ -46,8 +54,8 @@ def play():
     if ((month == 11 and 30 >= day >= 27)
         or (month == 12 and 25 >= day >= 1)):
             print('DING DONG')
-            wav = random.randint(0,22)
-            os.system('aplay jnglbell.wav >/dev/null 2>&1')
+            playcmd = 'aplay ' + christmastone() + '  >/dev/null 2>&1'
+            os.system(playcmd)
 
     elif (month == 10 and 30 >= day >= 1):
         print('DING DONG')
