@@ -51,7 +51,7 @@ def play():
     if ((y == 11 and 30 >= z >= 27)
         or (y == 12 and 25 >= z >= 1)):
             print('DING DONG')
-            os.system('aplay ding-dong.wav >/dev/null 2>&1')
+            os.system('aplay jnglbell.wav >/dev/null 2>&1')
 
     elif (y == 10 and 30 >= z >= 1):
         print('DING DONG')
