@@ -32,7 +32,7 @@ active = False
 def notify():
     result = client.chat_postMessage(
         channel=channel_id, 
-        text='Someone is at ' + doorbell + '\'s door'
+        text='Someone is at the ' + doorbell + ' door'
     )
     #logger.info(result)
 
