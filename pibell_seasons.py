@@ -46,6 +46,16 @@ def christmastone():
     print(wavfile)
     return wavfile
 
+def halloweentone():
+    wav = {
+        0: "vampirehowl.wav",
+        1: "hohoho.wav",
+        2: "carolbells.wav"
+    }
+    wavfile = wav.get(random.randint(0,2),'ding-dong.wav')
+    print(wavfile)
+    return wavfile
+
 def play():
     x = datetime.datetime.now()
     month = (x.month)
@@ -60,7 +70,8 @@ def play():
     elif (month == 10 and 30 >= day >= 1):
         print('DING DONG')
         wav = random.randint(0,22)
-        os.system('aplay vampirehowl.wav >/dev/null 2>&1')  
+        playcmd = 'aplay ' + halloweentone() + '  >/dev/null 2>&1'
+        os.system(playcmd)
 
     else:
         os.system('aplay ding-dong.wav >/dev/null 2>&1')
