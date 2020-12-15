@@ -55,10 +55,10 @@ def play():
 
     elif (y == 10 and 30 >= z >= 1):
         print('DING DONG')
-        os.system('aplay vampire howl.wav >/dev/null 2>&1')  
+        os.system('aplay vampirehowl.wav >/dev/null 2>&1')  
 
     else:
-        os.system('aplay din-dong.wav >/dev/null 2>&1')
+        os.system('aplay ding-dong.wav >/dev/null 2>&1')
     
 def wait():
     global active
