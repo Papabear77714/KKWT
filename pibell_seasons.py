@@ -22,8 +22,11 @@ tone = 0
 today = (date.today())
 y = (today.year)
 holidays = [('New Year', (date(y, 1, 1), date(y, 1, 10))),
+            ('Valentines', (date(y, 2, 13), date(y, 2, 15))),
+            ('Fourth of July', (date(y, 7, 1), date(y, 7, 7))),
             ('Halloween', (date(y, 10, 1), date(y, 10, 31))),
-            ('Christmas', (date(y, 11, 23), date(y, 12, 31)))]
+            ('Thanksgiving', (date(y, 11, 18), date(y, 11, 24))),
+            ('Christmas', (date(y, 11, 25), date(y, 12, 15)))]
 
 client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 doorbell = os.getenv('KKWT_NAME')
@@ -54,10 +57,13 @@ def get_holiday(now):
 # Defines which tone to play for specific holiday
 def doortone():
     global tone
-    holiday = ["New Year", "Halloween", "Christmas"]
+    holiday = ["New Year", "Valentines", "Fourth of July", "Halloween", "Thanksgiving", "Christmas"]
     wav = [["ding-dong.wav"]]
-    wav.insert(holiday.index("New Year"), ["happyny.wav"])
+    wav.insert(holiday.index("New Year"), ["celebrate", "hppyyr.wav"])
+    wav.insert(holiday.index("Valentines"), ["heart.wav", "love.wav"])
+    wav.insert(holiday.index("Fourth of July"), ["firework.wav", "cannon.wav"])
     wav.insert(holiday.index("Halloween"), ["vampirehowl.wav", "spooky.wav", "jacko.wav"])
+    wav.insert(holiday.index("Thanksgiving"), ["gobblegobble.wav", "pilgrim.wav"])
     wav.insert(holiday.index("Christmas"), ["jnglbell.wav", "hohoho.wav", "carolbells.wav"])
    
 
