@@ -11,14 +11,19 @@ import wave
 import time
 import sys
 import os
-#import smtplib for text messages
 import random
 
-#from email.message import EmailMessage
 from array import *
-
+from datetime import date,datetime
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
+
+tone = 0
+today = (date.today())
+y = (today.year)
+holidays = [('New Year', (date(y, 1, 1), date(y, 1, 10))),
+            ('Halloween', (date(y, 10, 1), date(y, 10, 31))),
+            ('Christmas', (date(y, 11, 23), date(y, 12, 31)))]
 
 client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 doorbell = os.getenv('KKWT_NAME')
@@ -30,6 +35,7 @@ bounce_time = 1
 
 active = False
 
+# Sends notification to Slack
 def notify():
     result = client.chat_postMessage(
         channel=channel_id, 
@@ -37,97 +43,39 @@ def notify():
     )
     #logger.info(result)
 
-tone = 0
+# Defines which holiday we are in
+def get_holiday(now):
+    if isinstance(now, datetime):
+        now = now.date()
+    now = now.replace(year = y)
+    return next(holiday for holiday, (start, end) in holidays
+                if start <= now <= end)
 
+# Defines which tone to play for specific holiday
 def doortone():
-    holiday = ["NewYear", "Halloween", "Christmas"]
+    global tone
+    holiday = ["New Year", "Halloween", "Christmas"]
     wav = [["ding-dong.wav"]]
-    wav[holiday["Halloween"]][0] = "vampirehowl.wav"
-    wav.insert(holiday.index("Christmas"), ["jnglebell.wav", "hohoho.wav", "carolbells.wav"])
-    wav.insert(holiday.index("Halloween"), ["vampirehowl.wav", "spooky.wav", "jacko.wav"])
     wav.insert(holiday.index("New Year"), ["happyny.wav"])
+    wav.insert(holiday.index("Halloween"), ["vampirehowl.wav", "spooky.wav", "jacko.wav"])
+    wav.insert(holiday.index("Christmas"), ["jnglbell.wav", "hohoho.wav", "carolbells.wav"])
+   
 
-    today = datetime.datetime.now()
-    month = (today.month)
-    day = (today.day)
-
-    if (month == 1 and 10 >-= day >= 1):
-        currentholiday = holiday["NewYear"]
-
-    elif (month == 10 and 30 >= day >= 1):
-        print('DING DONG')
-        currentholiday = holiday["Halloween"]
-
-    elif ((month == 11 and 30 >= day >= 23)
-        or (month == 12 and 31 >= day >= 1)):
-            print('DING DONG')
-            currentholiday = holday["Christmas"]
-    else:
-        return "ding-dong.wav"
+    currentholiday = holiday.index(get_holiday(date.today()))
 
     tone += 1
     if (tone >= len(wav[currentholiday])):
         tone =0
 
     return wav[currentholiday][tone]
-    
 
-#This defines the music for the bells
-'''def newyears(): #NEED TO GET TONES!
-    wav = {
-        0: "vampirehowl.wav",
-        1: "hohoho.wav",
-        2: "carolbells.wav"
-    }
-    wavfile = wav.get(random.randint(0,2),'ding-dong.wav')
-    print(wavfile)
-    return wavfile
-
-def halloweentone(): #NEED TO GET TONES!
-    wav = {
-        0: "vampirehowl.wav",
-        1: "hohoho.wav",
-        2: "carolbells.wav"
-    }
-    wavfile = wav.get(random.randint(0,2),'ding-dong.wav')
-    print(wavfile)
-    return wavfile
-
-def christmastone():
-    wav = {
-        0: "jnglbell.wav",
-        1: "hohoho.wav",
-        2: "carolbells.wav"
-    }
-    wavfile = wav.get(random.randint(0,2),'ding-dong.wav')
-    print(wavfile)
-    return wavfile
-
-#This will define the times it is played
+# Tells script to play tone
 def play():
-    x = datetime.datetime.now()
-    month = (x.month)
-    day = (x.day)
-
-    if (month == 1 and 10 >= day >= 1):
         print('DING DONG')
-        wav = random.randint(0,22)
-        playcmd = 'aplay ' + newyears() + '  >/dev/null 2>&1'
+        currentdoortone = doortone()
+        print (currentdoortone)
+        playcmd = 'aplay ' + currentdoortone + '  >/dev/null 2>&1'
         os.system(playcmd)
-
-    elif (month == 10 and 30 >= day >= 1):
-        print('DING DONG')
-        wav = random.randint(0,22)
-        playcmd = 'aplay ' + halloweentone() + '  >/dev/null 2>&1'
-        os.system(playcmd)
-
-    elif ((month == 11 and 30 >= day >= 23)
-        or (month == 12 and 31 >= day >= 1)):
-            print('DING DONG')
-            playcmd = 'aplay ' + christmastone() + '  >/dev/null 2>&1'
-            os.system(playcmd)
-    else:
-        os.system('aplay ding-dong.wav >/dev/null 2>&1')'''
     
 def wait():
     global active
@@ -141,7 +89,7 @@ def wait():
         time.sleep(0.2)
 
 def trigger():
-    now = datetime.datetime.now()
+    now = datetime.now()
     print("Doorbell pushed at: ")
     print(now.strftime('%Y-%m-%d %H:%M:%S'))
    
@@ -149,7 +97,7 @@ def trigger():
     tn = threading.Thread(target=notify)
     tn.start()
 
-    tp = threading.Thread(target=doortone) #return to play
+    tp = threading.Thread(target=play)
     tp.start()
 
     tw = threading.Thread(target=wait)
