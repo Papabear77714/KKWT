@@ -73,6 +73,8 @@ def doortone():
     if (tone >= len(wav[currentholiday])):
         tone =0
     return wav[currentholiday][tone]
+        
+    
 
 # Tells script to play tone
 def play():
