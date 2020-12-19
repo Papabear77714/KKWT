@@ -21,10 +21,10 @@ from slack_sdk.errors import SlackApiError
 tone = 0
 today = (date.today())
 y = (today.year)
-holidays = [('New Year', (date(y, 1, 1), date(y, 1, 10))),
-            ('Valentines', (date(y, 2, 13), date(y, 2, 15))),
-            ('Fourth of July', (date(y, 7, 1), date(y, 7, 7))),
-            ('Halloween', (date(y, 10, 1), date(y, 10, 31))),
+holidays = [('New Year', (date(y, 1, 1), date(y, 1, 10))),            
+            ('Valentines', (date(y, 2, 13), date(y, 2, 15))),            
+            ('Fourth of July', (date(y, 7, 1), date(y, 7, 7))),            
+            ('Halloween', (date(y, 10, 1), date(y, 10, 31))),            
             ('Thanksgiving', (date(y, 11, 18), date(y, 11, 24))),
             ('Christmas', (date(y, 11, 25), date(y, 12, 31)))]
 
@@ -51,13 +51,19 @@ def get_holiday(now):
     if isinstance(now, datetime):
         now = now.date()
     now = now.replace(year = y)
-    return next(holiday for holiday, (start, end) in holidays
-                if start <= now <= end)
+    try:
+        currentholiday = next(holiday for holiday, (start, end) in holidays if start <= now <= end)
+    except: 
+        currentholiday = "No Holiday"
+    finally:
+        return currentholiday 
 
 # Defines which tone to play for specific holiday
 def doortone():
     global tone
-    holiday = ["New Year", "Valentines", "Fourth of July", "Halloween", "Thanksgiving", "Christmas"]
+    # The array list and the wav list must be in the same order for code to work properly.
+    # Last item listed must be "No Holiday" to ensure it works properly
+    holiday = ["New Year", "Valentines", "Fourth of July", "Halloween", "Thanksgiving", "Christmas", "No Holiday"]
     wav = [["ding-dong.wav"]]
     wav.insert(holiday.index("New Year"), ["celebrate.wav", "hppyyr.wav"])
     wav.insert(holiday.index("Valentines"), ["heart.wav", "love.wav"])
