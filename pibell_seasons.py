@@ -65,7 +65,7 @@ def doortone():
     # Last item listed must be "No Holiday" to ensure it works properly
     holiday = ["New Year", "Valentines", "Fourth of July", "Halloween", "Thanksgiving", "Christmas", "No Holiday"]
     wav = [["ding-dong.wav"]]
-    wav.insert(holiday.index("New Year"), ["celebrate.wav", "hppyyr.wav"])
+    wav.insert(holiday.index("New Year"), ["auld-lang-syne.wav"])
     wav.insert(holiday.index("Valentines"), ["heart.wav", "love.wav"])
     wav.insert(holiday.index("Fourth of July"), ["firework.wav", "cannon.wav"])
     wav.insert(holiday.index("Halloween"), ["vampirehowl.wav", "spooky.wav", "jacko.wav"])
